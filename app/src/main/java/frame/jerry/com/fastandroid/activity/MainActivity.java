@@ -19,7 +19,6 @@ import java.util.List;
 import frame.jerry.com.fastandroid.R;
 import frame.jerry.com.fastandroid.model.Album;
 import frame.jerry.com.fastandroid.model.Singer;
-import frame.jerry.com.fastandroid.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity {
     ImageView iv;

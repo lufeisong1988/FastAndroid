@@ -5,8 +5,6 @@ import org.litepal.crud.DataSupport;
 import java.util.Date;
 import java.util.List;
 
-import frame.jerry.com.fastandroid.utils.LogUtil;
-
 /**
  * Created by lufeisong on 16/3/16.
  */
