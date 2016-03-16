@@ -1,4 +1,4 @@
-package frame.jerry.com.fastandroid.ui;
+package frame.jerry.com.fastandroid.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,7 +12,13 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
 import frame.jerry.com.fastandroid.R;
+import frame.jerry.com.fastandroid.model.Album;
+import frame.jerry.com.fastandroid.model.Singer;
 import frame.jerry.com.fastandroid.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             .showImageOnFail(0)
             .showImageOnLoading(0)
             .build();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,5 +62,41 @@ public class MainActivity extends AppCompatActivity {
                 LogUtil.printLog("imageLoader ProgressUpdate : total = " + total + " : current = " + current);
             }
         });
+//        Album album = new Album();
+//        album.setName("张学友");
+//        album.setPrice(129.9);
+//        album.setPublisher("传媒公司");
+//        album.setSales(70);
+//        album.setSerial("xueyou");
+//        album.save();
+//        Album album2 = new Album();
+//        album2.setName("蔡依林");
+//        album2.setPrice(129.9);
+//        album2.setPublisher("传媒公司");
+//        album2.setSales(70);
+//        album2.setSerial("jolin");
+//        album2.save();
+        Singer singer = new Singer();
+        singer.setName("周杰伦");
+        singer.setAge(26);
+        singer.setMale(true);
+        singer.save();
+        List<Album> albums = DataSupport.select("name", "price")
+                .where("name=?", "周杰伦")
+                .find(Album.class);
+        for (Album album : albums) {
+            LogUtil.printLog("album : name = " + album.getName()
+                    + " ; price = " + album.getPrice()
+                    + " ; sales = " + album.getSales());
+            List<Singer> singers = album.getSingers();
+            for (Singer singer1 : singers) {
+                LogUtil.printLog("singer1 : name = " + singer1.getName()
+                        + " ; age = " + singer1.getAge()
+                        + " ; male = " + singer1.isMale()
+                        + " ; id = " + singer1.getId());
+
+            }
+        }
     }
+
 }
