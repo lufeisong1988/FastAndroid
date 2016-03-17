@@ -74,7 +74,6 @@ public class Album extends BaseModel {
     }
 
     public List<Singer> getSingers() {
-        LogUtil.printLog("name = " + name);
         return DataSupport.where("name=?", name).find(Singer.class);
     }
 }
