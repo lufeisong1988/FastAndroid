@@ -1,12 +1,12 @@
 package frame.jerry.com.fastandroid.activity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.fastjson.JSON;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -15,9 +15,13 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 import frame.jerry.com.fastandroid.R;
 import frame.jerry.com.fastandroid.eventbus.EventTest;
+import frame.jerry.com.fastandroid.model.Album;
 import frame.jerry.com.fastandroid.utils.LogUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -76,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
 //        singer.setAge(26);
 //        singer.setMale(true);
 //        singer.save();
-//        List<Album> albums = DataSupport.select("name", "price")
-//                .where("name=?", "周杰伦")
-//                .find(Album.class);
+        List<Album> albums = DataSupport.findAll(Album.class,true);
 //        for (Album album : albums) {
 //            LogUtils.i("album : name = " + album.getName()
 //                    + " ; price = " + album.getPrice()
@@ -92,17 +94,35 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                    MainActivity.this.startActivity(new Intent(MainActivity.this, EventBusActivity.class));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(2000);
+//                    MainActivity.this.startActivity(new Intent(MainActivity.this, EventBusActivity.class));
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+        String JSON2String = JSON.toJSONString(albums);
+        LogUtils.i("JSON2String = " + JSON2String + "\n\n");
+        List<Album> String2JSONArray = JSON.parseArray(JSON2String, Album.class);
+//        for (Album album : String2JSONArray) {
+//            LogUtils.i("String2JSONArray = " + album.getId() + " ; "
+//                    + album.getName() + " ; "
+//                    + album.getPrice() + " ; "
+//                    + album.getPublisher() + " ; "
+//                    + album.getSerial() + " ; "
+//                    + album.getRelease());
+//        }
+        Album album = JSON.parseObject(JSON.toJSONString(String2JSONArray.get(0)),Album.class);
+        LogUtils.i("String2JSONArray = " + album.getId() + " ; "
+                + album.getName() + " ; "
+                + album.getPrice() + " ; "
+                + album.getPublisher() + " ; "
+                + album.getSerial() + " ; "
+                + album.getRelease());
     }
 
     @Override
@@ -110,11 +130,10 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
     @Subscribe//必须申明
-    public void onEvent(EventTest event){
+    public void onEvent(EventTest event) {
         LogUtils.i(event.getTitle());
 
     }
-//    public void onEventMainThread(EventTest event) {
-//    }
 }
