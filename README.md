@@ -31,3 +31,5 @@
     *功能qiang打，支持JDK的各种类型，包括基本的JavaBean、Collection、Map、Date、Enum、泛型。
     *无依赖，不需要例外额外的jar，能够直接跑在JDK上。
     *开源，使用Apache License 2.0协议开源。
+＃bugTags
+     *增加一场崩溃tag的记录和上传

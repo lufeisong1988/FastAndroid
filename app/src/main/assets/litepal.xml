@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="test"></dbname>
-    <version value="5"></version>
+    <version value="1"></version>
     <list>
         <mapping class="frame.jerry.com.fastandroid.model.Album"></mapping>
         <mapping class="frame.jerry.com.fastandroid.model.Song"></mapping>
